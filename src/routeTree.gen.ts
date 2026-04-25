@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SerieSeriesIdRouteImport } from './routes/serie.$seriesId'
+import { Route as ProfilProfilIdRouteImport } from './routes/profil.$profilId'
 
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
@@ -28,34 +29,43 @@ const SerieSeriesIdRoute = SerieSeriesIdRouteImport.update({
   path: '/serie/$seriesId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfilProfilIdRoute = ProfilProfilIdRouteImport.update({
+  id: '/profil/$profilId',
+  path: '/profil/$profilId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/portfolio': typeof PortfolioRoute
+  '/profil/$profilId': typeof ProfilProfilIdRoute
   '/serie/$seriesId': typeof SerieSeriesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/portfolio': typeof PortfolioRoute
+  '/profil/$profilId': typeof ProfilProfilIdRoute
   '/serie/$seriesId': typeof SerieSeriesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/portfolio': typeof PortfolioRoute
+  '/profil/$profilId': typeof ProfilProfilIdRoute
   '/serie/$seriesId': typeof SerieSeriesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/portfolio' | '/serie/$seriesId'
+  fullPaths: '/' | '/portfolio' | '/profil/$profilId' | '/serie/$seriesId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/portfolio' | '/serie/$seriesId'
-  id: '__root__' | '/' | '/portfolio' | '/serie/$seriesId'
+  to: '/' | '/portfolio' | '/profil/$profilId' | '/serie/$seriesId'
+  id: '__root__' | '/' | '/portfolio' | '/profil/$profilId' | '/serie/$seriesId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PortfolioRoute: typeof PortfolioRoute
+  ProfilProfilIdRoute: typeof ProfilProfilIdRoute
   SerieSeriesIdRoute: typeof SerieSeriesIdRoute
 }
 
@@ -82,14 +92,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SerieSeriesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profil/$profilId': {
+      id: '/profil/$profilId'
+      path: '/profil/$profilId'
+      fullPath: '/profil/$profilId'
+      preLoaderRoute: typeof ProfilProfilIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PortfolioRoute: PortfolioRoute,
+  ProfilProfilIdRoute: ProfilProfilIdRoute,
   SerieSeriesIdRoute: SerieSeriesIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
