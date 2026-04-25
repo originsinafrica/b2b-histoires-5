@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { useWallet } from "@/store/wallet";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Briefcase } from "lucide-react";
 
 export function Header() {
   const solde = useWallet((s) => s.solde);

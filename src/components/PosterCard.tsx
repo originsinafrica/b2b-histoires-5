@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import type { Serie } from "@/data/series";
 
 export function PosterCard({ serie }: { serie: Serie }) {
   return (
     <Link
-      to={`/serie/${serie.id}`}
+      to="/serie/$seriesId"
+      params={{ seriesId: serie.id }}
       className="group relative block aspect-[3/4] overflow-hidden rounded-2xl shadow-poster bg-muted transition-all duration-500 hover:-translate-y-1 hover:shadow-luxe"
     >
       {serie.affiche ? (

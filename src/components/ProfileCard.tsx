@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import type { Profil, Serie } from "@/data/series";
 import { Avatar } from "./Avatar";
 import { useWallet } from "@/store/wallet";
@@ -18,7 +18,8 @@ export function ProfileCard({
 
   return (
     <Link
-      to={`/profil/${profil.id}`}
+      to="/profil/$profilId"
+      params={{ profilId: profil.id }}
       className="group flex w-[300px] shrink-0 snap-start flex-col rounded-2xl bg-card border border-border/60 overflow-hidden shadow-poster hover:shadow-luxe transition-all duration-300 hover:-translate-y-0.5"
     >
       {/* Grande photo */}
