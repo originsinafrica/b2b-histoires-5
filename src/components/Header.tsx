@@ -15,10 +15,20 @@ export function Header() {
             Stories. Stakes.
           </span>
         </Link>
-        <div className="flex items-center gap-2 rounded-full px-4 py-2 bg-foreground text-background shadow-luxe">
-          <Sparkles className="h-3.5 w-3.5 text-accent" strokeWidth={2.5} />
-          <span className="text-sm font-semibold tabular-nums">{solde.toFixed(0)}</span>
-          <span className="text-[10px] uppercase tracking-wider text-background/70">Noix</span>
+        <div className="flex items-center gap-3">
+          <Link
+            to="/portfolio"
+            activeProps={{ className: "text-foreground" }}
+            className="hidden sm:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition"
+          >
+            <Briefcase className="h-3.5 w-3.5" />
+            Portfolio
+          </Link>
+          <div className="flex items-center gap-2 rounded-full px-4 py-2 bg-foreground text-background shadow-luxe">
+            <Sparkles className="h-3.5 w-3.5 text-accent" strokeWidth={2.5} />
+            <span className="text-sm font-semibold tabular-nums">{solde.toFixed(0)}</span>
+            <span className="text-[10px] uppercase tracking-wider text-background/70">Noix</span>
+          </div>
         </div>
       </div>
     </header>
