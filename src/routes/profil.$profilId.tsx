@@ -19,6 +19,7 @@ import { Avatar } from "@/components/Avatar";
 import { EpisodeCarousel } from "@/components/EpisodeCarousel";
 import { PriceChart } from "@/components/PriceChart";
 import { ProfileCard } from "@/components/ProfileCard";
+import { useSwipeUp } from "@/hooks/use-swipe-up";
 import videoPoster from "@/assets/video-poster.jpg";
 
 export const Route = createFileRoute("/profil/$profilId")({
@@ -42,6 +43,18 @@ function ProfilPage() {
     type: "ok" | "err";
     msg: string;
   } | null>(null);
+
+  // Swipe vers le haut → retour à la série (si profil chargé)
+  useSwipeUp(
+    () => {
+      if (serie) {
+        navigate({ to: "/serie/$seriesId", params: { seriesId: serie.id } });
+      } else {
+        navigate({ to: "/" });
+      }
+    },
+    !!profil && !open,
+  );
 
   if (!profil || !serie) {
     return (
